@@ -18,11 +18,11 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 ## Características
 
 - Registro e inicio de sesión de usuarios.
-- Panel de administración para gestionar productos, categorías y usuarios.
+- Panel de administración para gestionar productos, ventas y usuarios.
 - Carrito de compras y procesamiento de pagos con Stripe.
 - Página de detalles del producto con imágenes y descripciones.
 - Filtrado y búsqueda de productos.
-- Sistema de reseñas y calificaciones de productos.
+- Sistema de trending y views de productos.
 
 ## Requisitos
 
