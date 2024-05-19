@@ -122,11 +122,11 @@
         <div class="segundo-menu">
             <ul>
                 <li><a href="{{route("shopping")}}">Descuentos</a></li>
-                <li><a href="{{route("shopping", ['genero'=>'mujer'])}}">Damas</a></li>
-                <li><a href="{{route("shopping", ['genero'=>'hombre'])}}">Caballeros</a></li>
-                <li><a href="{{route("shopping", ['genero'=>'niño'])}}">Niños</a></li>
-                <li><a href="{{route("shopping")}}">Moda</a></li>
-                <li><a href="{{route("shopping")}}">Mas vendidos</a></li>
+                <li><a href="{{route("shopping", ['gender'=>'mujer'])}}">Damas</a></li>
+                <li><a href="{{route("shopping", ['gender'=>'hombre'])}}">Caballeros</a></li>
+                <li><a href="{{route("shopping", ['gender'=>'niño'])}}">Niños</a></li>
+                <li><a href="{{route("shopping", ['moda'=>'true'])}}">Moda</a></li>
+                <li><a href="{{route("shopping", ['msv'=>'true'])}}">Mas vendidos</a></li>
 
             </ul>
         </div>

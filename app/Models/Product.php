@@ -25,4 +25,9 @@ class Product extends Model
     {
         return $this->hasMany(Sell::class);
     }
+
+    public function trending()
+    {
+        return $this->hasMany(Trending::class);
+    }
 }

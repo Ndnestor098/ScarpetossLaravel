@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Size;
+use App\Models\Trending;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -19,6 +20,18 @@ class ProductController extends Controller
             $products = Product::limit(8)->get();
 
             $sizes = $product->sizes;
+
+            $trending = Trending::where('product_id', $product->id)->first();
+            if($trending){
+                $trending->count = intval($trending->count) + 1;
+                $trending->save();
+
+            }else{
+                Trending::create([
+                    'product_id' => $product->id,
+                    'count' => 1,
+                ]);
+            }
 
             return view("product", ["product"=>$product, "products"=>$products, 'sizes'=>$sizes]);
         }

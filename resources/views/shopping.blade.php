@@ -12,7 +12,7 @@
             <div class="count-productos">
                 <div class="contenido-title-celda">
                     <div class="celda-content">
-                        <a href="{{ request()->fullUrlWithQuery(['genero' => 'hombre']) }}"><div class="content-product">
+                        <a href="{{ request()->fullUrlWithQuery(['gender' => 'hombre']) }}"><div class="content-product">
                             <p class="title-content-cell">Hombre</p>
                             <p class="max-content-cell">
                                 {{$DB->where("gender", 'hombre')->count()}}
@@ -20,7 +20,7 @@
                         </div></a>
                     </div>
                     <div class="celda-content">
-                        <a href="{{ request()->fullUrlWithQuery(['genero' => 'mujer']) }}"><div class="content-product">
+                        <a href="{{ request()->fullUrlWithQuery(['gender' => 'mujer']) }}"><div class="content-product">
                             <p class="title-content-cell">Mujeres</p>
                             <p class="max-content-cell">
                                 {{$DB->where("gender", 'mujer')->count()}}
@@ -28,7 +28,7 @@
                         </div></a>
                     </div>
                     <div class="celda-content">
-                        <a href="{{ request()->fullUrlWithQuery(['genero' => 'niño']) }}"><div class="content-product">
+                        <a href="{{ request()->fullUrlWithQuery(['gender' => 'niño']) }}"><div class="content-product">
                             <p class="title-content-cell">Niños</p>
                             <p class="max-content-cell">
                                 {{$DB->where("gender", 'niño')->count()}}
@@ -36,7 +36,7 @@
                         </div></a>
                     </div>
                     <div class="celda-content">
-                        <a href="{{ request()->fullUrlWithQuery(['genero' => 'unisex']) }}"><div class="content-product">
+                        <a href="{{ request()->fullUrlWithQuery(['gender' => 'unisex']) }}"><div class="content-product">
                             <p class="title-content-cell">Unisex</p>
                             <p class="max-content-cell">
                                 {{$DB->where("gender", 'unisex')->count()}}
