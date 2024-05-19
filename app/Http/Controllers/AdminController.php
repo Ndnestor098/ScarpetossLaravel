@@ -84,6 +84,8 @@ class AdminController extends Controller
     {
         $user = User::find(intval($request->id));
         $user->delete();
+
+        return back();
     }
 
     //==================================================Area de edicion de Productos====================================================

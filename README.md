@@ -38,8 +38,8 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 1. Clona el repositorio:
 
     ```bash
-    git clone https://github.com/tu-usuario/zapatos-shop.git
-    cd zapatos-shop
+    git clone https://github.com/Ndnestor098/ScarpetossLaravel.git
+    cd Scarpetoss
     ```
 
 2. Instala las dependencias de PHP:
@@ -86,7 +86,7 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 8. Ejecuta las migraciones y los seeders:
 
     ```bash
-    php artisan migrate --seed
+    php artisan migrate
     ```
 
 ## Configuración
@@ -113,7 +113,7 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 
 ## Uso
 
-- Inicia el servidor de desarrollo:
+- Inicia el servidor de desarrollo usando XAMPP o:
 
     ```bash
     php artisan serve
@@ -124,6 +124,10 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
     ```
     http://localhost:8000
     ```
+
+- Una vez iniciado te recomiendo registrarte y desde MySQL activar el is_admin a true.
+
+- Siendo admin, entra en la pagina administrador y agrega productos, puedes controlarlo desde un CRUD.
 
 - Navega por la tienda, agrega productos al carrito y realiza pagos seguros con Stripe.
 

@@ -52,7 +52,7 @@
                                 <td class="none">{{Str::limit($x->password,20)}}</td>
                                 <td class="center">@if($x->is_admin == 1) True @else False @endif</td>
                                 <td class="center">{{$x->created_at}}</td>
-                                <form action="{{route("admin.users.delete")}}" method="POST">
+                                <form action="" method="POST">
                                     @csrf
                                     @method('delete')
                                     <input type="hidden" name="id" value="{{$x->id}}">
