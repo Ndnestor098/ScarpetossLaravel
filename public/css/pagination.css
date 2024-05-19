@@ -1,0 +1,103 @@
+/* ===========================================PAGINATION=========================================== */
+.pagination.is-rounded .pagination-next,.pagination.is-rounded .pagination-previous {
+    border-radius: var(--bulma-radius-rounded);
+    padding-left: 1em;
+    padding-right: 1em
+}
+.pagination,.pagination-list {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center
+}
+.pagination-link,.pagination-next,.pagination-previous {
+    background-color: hsl(var(--bulma-pagination-item-h),var(--bulma-pagination-item-s),calc(var(--bulma-pagination-item-background-l) + var(--bulma-pagination-item-background-l-delta)));
+    border-color: hsl(var(--bulma-pagination-item-h),var(--bulma-pagination-item-s),calc(var(--bulma-pagination-item-border-l) + var(--bulma-pagination-item-border-l-delta)));
+    border-style: var(--bulma-pagination-item-border-style);
+    border-width: var(--bulma-pagination-item-border-width);
+    box-shadow: 0 .0625em .125em hsla(var(--bulma-pagination-item-outer-shadow-h),var(--bulma-pagination-item-outer-shadow-s),var(--bulma-pagination-item-outer-shadow-l),var(--bulma-pagination-item-outer-shadow-a)),0 .125em .25em hsla(var(--bulma-pagination-item-outer-shadow-h),var(--bulma-pagination-item-outer-shadow-s),var(--bulma-pagination-item-outer-shadow-l),var(--bulma-pagination-item-outer-shadow-a));
+    color: hsl(var(--bulma-pagination-item-h),var(--bulma-pagination-item-s),var(--bulma-pagination-item-color-l));
+    min-width: var(--bulma-pagination-min-width);
+    transition-duration: var(--bulma-duration);
+    transition-property: background-color,border-color,box-shadow,color
+}
+.pagination-link.is-disabled,.pagination-link[disabled],.pagination-next.is-disabled,.pagination-next[disabled],.pagination-previous.is-disabled,.pagination-previous[disabled] {
+    background-color: var(--bulma-pagination-disabled-background-color);
+    border-color: var(--bulma-pagination-disabled-border-color);
+    box-shadow: none;
+    color: var(--bulma-pagination-disabled-color);
+    opacity: .5
+}
+.pagination-next,.pagination-previous {
+    padding-left: var(--bulma-pagination-nav-padding-left);
+    padding-right: var(--bulma-pagination-nav-padding-right);
+    white-space: nowrap
+}
+.pagination-link.is-current,.pagination-link.is-selected {
+    --bulma-pagination-item-h: var(--bulma-pagination-selected-item-h);
+    --bulma-pagination-item-s: var(--bulma-pagination-selected-item-s);
+    --bulma-pagination-item-l: var(--bulma-pagination-selected-item-l);
+    --bulma-pagination-item-background-l: var(--bulma-pagination-selected-item-background-l);
+    --bulma-pagination-item-border-l: var(--bulma-pagination-selected-item-border-l);
+    --bulma-pagination-item-color-l: var(--bulma-pagination-selected-item-color-l)
+}
+.pagination-list {
+    flex-wrap: wrap
+}
+
+
+@media screen and (max-width: 768px) {
+/* ===========================================PAGINATION=========================================== */
+    .pagination {
+        flex-wrap:wrap
+    }
+    .pagination-list li,.pagination-next,.pagination-previous {
+        flex-grow: 1;
+        flex-shrink: 1
+    }
+}
+
+@media print,screen and (min-width: 769px) {
+/* ===========================================PAGINATION=========================================== */
+    .pagination-list {
+        flex-grow:1;
+        flex-shrink: 1;
+        justify-content: flex-start;
+        order: 1
+    }
+    .pagination-ellipsis,.pagination-link,.pagination-next,.pagination-previous {
+        margin-bottom: 0;
+        margin-top: 0
+    }
+    .pagination-previous {
+        order: 2
+    }
+    .pagination-next {
+        order: 3
+    }
+    .pagination {
+        justify-content: space-between;
+        margin-bottom: 0;
+        margin-top: 0
+    }
+    .pagination.is-centered .pagination-previous {
+        order: 1
+    }
+    .pagination.is-centered .pagination-list {
+        justify-content: center;
+        order: 2
+    }
+    .pagination.is-centered .pagination-next {
+        order: 3
+    }
+    .pagination.is-right .pagination-previous {
+        order: 1
+    }
+    .pagination.is-right .pagination-next {
+        order: 2
+    }
+    .pagination.is-right .pagination-list {
+        justify-content: flex-end;
+        order: 3
+    }
+}
