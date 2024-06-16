@@ -6,7 +6,6 @@ use App\Models\Product;
 use App\Models\Sell;
 use App\Models\Trending;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ShoppingController extends Controller
 {
@@ -15,43 +14,11 @@ class ShoppingController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $DB = new Product();
-        $query = 'SELECT * FROM products WHERE name != "" ';
+        $products = Product::gender($request->gender)
+                ->orders($request->orderBy)
+                ->get();
 
-        if($request->gender == 'hombre'){
-            $query .= 'AND gender = "hombre"';
-        }
-
-        if($request->gender == 'mujer'){
-            $query .= 'AND gender = "mujer"';
-        }
-
-        if($request->gender == 'niño'){
-            $query .= 'AND gender = "niño"';
-        }
-
-        if($request->gender == 'unisex'){
-            $query .= 'AND gender = "unisex"';
-        }
-        
-        if($request->orderBy == 'DESCLetra'){
-            $query .= ' ORDER BY name DESC';
-        }
-
-        if($request->orderBy == 'ASCLetra'){
-            $query .= ' ORDER BY name ASC';
-        }
-
-        if($request->orderBy == 'ASCPrecio'){
-            $query .= ' ORDER BY price ASC';
-        }
-
-        if($request->orderBy == 'DESCPrecio'){
-            $query .= ' ORDER BY price DESC';
-        }
-
-        $products = DB::select($query);
-        $DB->append([
+        $products->append([
             "gender" => $request->gender,
             "orderBy" => $request->orderBy,
         ]);
@@ -63,7 +30,6 @@ class ShoppingController extends Controller
                 ->get()
                 ->pluck('product');
         }
-        
 
         if($request->msv == 'true'){
             $products = Sell::with('product')
@@ -73,6 +39,8 @@ class ShoppingController extends Controller
                 ->unique('product_id')
                 ->pluck('product');
         }
+
+        $DB = Product::all();
 
         return view("shopping", ["DB"=>$DB, "products"=>$products]);
     }

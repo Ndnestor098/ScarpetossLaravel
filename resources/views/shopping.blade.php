@@ -64,7 +64,7 @@
                         </div>
 
                         <div class="cantidad-producto">
-                            <p>Resultado: {{$DB->all()->count()}}</p>
+                            <p>Resultado: {{$DB->count()}}</p>
                         </div>
                         <div class="div-buscar">
                             <button type="submit">Buscar</button>
@@ -79,7 +79,7 @@
                                     <a href="{{route("product", ["shoes"=>$x->name])}}">
 
                                         <div class="image-producto">
-                                            <img src='{{ Storage::url($x->imageP) }}' alt="Zapato">
+                                            <img src='{{ Storage::url('public/'.$x->imageP) }}' alt="Zapato">
                                         </div>
                                 
                                         <div class="informacion-producto">

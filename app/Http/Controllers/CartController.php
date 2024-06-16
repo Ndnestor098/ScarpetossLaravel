@@ -18,7 +18,10 @@ class CartController extends Controller
             ->where('user_id', auth()->user()->id)
             ->get(); // Ejecuta la consulta y obtiene los resultados
 
-        $count = Cart::with('product')->select(DB::raw('COUNT(*) as count'))->where('user_id', auth()->user()->id)->first();
+        $count = Cart::with('product')
+            ->select(DB::raw('COUNT(*) as count'))
+            ->where('user_id', auth()->user()->id)
+            ->first();
 
         return view("client.cart", ["datos" => $datos, 'valor'=>0, 'count' => $count->count]);
     }
@@ -27,7 +30,7 @@ class CartController extends Controller
     public function create(Request $request)
     {
         if(empty($request->sizes)){
-            return 'Error en la talla';
+            return 'Error en la talla.';
         }
 
         // Crear una nueva entrada en la tabla carritos

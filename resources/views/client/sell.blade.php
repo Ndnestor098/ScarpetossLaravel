@@ -14,15 +14,22 @@
                     <a href="{{route("client")}}" style="width: fit-content;"><div class="celda-opciones">
                         <p>Panel de cuenta</p>
                     </div></a>
-                    <a href="{{route("admin.product")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Productos</p>
+                    <a href="{{route("client.details")}}" style="width: fit-content;"><div class="celda-opciones">
+                        <p>Mis Datos</p>
                     </div></a>
-                    <a href="{{route("admin.users")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Usuarios</p>
+                    <a href="{{route("showEditPayment")}}" style="width: fit-content;"><div class="celda-opciones">
+                        <p>Metodo de Pago</p>
                     </div></a>
-                    <a href="{{route("admin.sell")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Ventas</p>
+                    <a href="{{route("purchase")}}" style="width: fit-content;"><div class="celda-opciones">
+                        <p>Registros de Compras</p>
                     </div></a>
+                    @if (Auth::user()->is_admin)
+                        <a href="{{route("admin")}}" style="width: fit-content;">
+                            <div class="celda-opciones">
+                                <p>Administrador</p>
+                            </div>
+                        </a>
+                    @endif
                     <a href="{{route("logout")}}" style="width: fit-content;"><div class="celda-opciones">
                         <p>Cerrar sesion</p>
                     </div></a>
