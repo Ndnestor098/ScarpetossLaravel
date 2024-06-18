@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/Ndnestor098/ScarpetossLaravel" target="_blank"><img src="https://ndnestor098.github.io/WebCV/img/logoScarpe.png" width="400" alt="Scarpetoss Logo"></a></p>
+<p align="center"><a href="https://github.com/Ndnestor098/ScarpetossLaravel" target="_blank"><img src="https://ndnestor098.github.io/WebCV/assets/img/logoScarpe.png" width="400" alt="Scarpetoss Logo"></a></p>
 
 
 # Scarpetoss
