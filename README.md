@@ -30,6 +30,8 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 - Composer
 - MySQL
 - Node.js & NPM
+- Tailwind
+- Lang Laravel
 - Laravel >= 11
 - Stripe API Key
 
@@ -86,7 +88,7 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 8. Ejecuta las migraciones y los seeders:
 
     ```bash
-    php artisan migrate
+    php artisan migrate:fresh --seed
     ```
 
 ## Configuración
