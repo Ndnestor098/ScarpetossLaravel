@@ -4,12 +4,16 @@
     Administrator Producto
 @endsection
 
+@section('link')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@endsection
+
 @section('content-page')
     <main>
         <!-- Contenido de la portada principal -->
         <div class="Portada-usuario" style="padding-bottom: 0">
             <div class="panel-cuenta">
-                <h2>Mi cuenta</h2>
+                <h2 class="font-bold text-xl">Mi cuenta</h2>
                 <div class="opciones">
                     <a href="{{route("client")}}" style="width: fit-content;"><div class="celda-opciones">
                         <p>Panel de cuenta</p>
@@ -85,6 +89,9 @@
                 @csrf
                 <button type="submit" class="add">Agregar Productos</button>
             </form>
+        </div>
+        <div class="p-5">
+            {{$datos->links()}}
         </div>
     </main>
 @endsection

@@ -4,6 +4,10 @@
     Shopping
 @endsection
 
+@section('link')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@endsection
+
 @section('content-page')
     <main>
         <!-- Contenido de la pagina principal -->
@@ -54,8 +58,8 @@
                         @method('post')
                         <div class="producto-opcion">
                             <label for="order-by">Ordenar por:</label>
-                            <select name="order-by">
-                                <option value="0">Recomendados</option>
+                            <select name="order-by" id="order-by" class="cursor-pointer">
+                                <option value="" selected disabled>Recomendados   </option>
                                 <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'ASCLetra']) }}" @if(request()->get("orderBy") == 'ASCLetra') selected @endif>Nombre: A - Z</option>
                                 <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'DESCLetra']) }}" @if(request()->get("orderBy") == 'DESCLetra') selected @endif>Nombre: Z - A</option>
                                 <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'ASCPrecio']) }}" @if(request()->get("orderBy") == 'ASCPrecio') selected @endif>Precio más bajo</option>
@@ -64,7 +68,7 @@
                         </div>
 
                         <div class="cantidad-producto">
-                            <p>Resultado: {{$DB->count()}}</p>
+                            <p class="text-sm font-normal">Resultado: {{$DB->count()}}</p>
                         </div>
                         <div class="div-buscar">
                             <button type="submit">Buscar</button>
@@ -91,7 +95,12 @@
                                 </div>
                         @endforeach
                     </div>
+                    <div class="px-5">
+                        {{ $products->links('vendor.pagination.tailwind') }}
+
+                    </div>
                 </div>
+
             </div>
         </div>
     </main>

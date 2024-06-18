@@ -1,13 +1,29 @@
 {
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "dev": "vite",
-        "build": "vite build"
-    },
-    "devDependencies": {
-        "axios": "^1.6.4",
-        "laravel-vite-plugin": "^1.0",
-        "vite": "^5.0"
-    }
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "autoprefixer": "^10.4.19",
+    "axios": "^1.6.4",
+    "laravel-mix": "^6.0.49",
+    "laravel-vite-plugin": "^1.0",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.0"
+  },
+  "name": "scarpetoss",
+  "description": "<p align=\"center\"><a href=\"https://github.com/Ndnestor098/ScarpetossLaravel\" target=\"_blank\"><img src=\"https://ndnestor098.github.io/WebCV/img/logoScarpe.png\" width=\"400\" alt=\"Scarpetoss Logo\"></a></p>",
+  "version": "1.0.0",
+  "main": "postcss.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

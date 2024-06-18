@@ -23,14 +23,18 @@ class AdminController extends Controller
 
     public function showProduct(Request $request)
     {
-        $datos = Product::all();
+        $datos = Product::paginate(20);
+
+        $datos->appends(request()->query())->links('vendor.pagination.tailwind');
 
         return view("admin.admin-product", ['datos' => $datos]);
     }
 
     public function showUsers(Request $request)
     {
-        $datos = User::all();
+        $datos = User::paginate(20);
+
+        $datos->appends(request()->query())->links('vendor.pagination.tailwind');
 
         return view("admin.admin-users", ['datos' => $datos]);
     }

@@ -16,7 +16,7 @@ class ShoppingController extends Controller
     {
         $products = Product::gender($request->gender)
                 ->orders($request->orderBy)
-                ->get();
+                ->paginate(20);
 
         $products->append([
             "gender" => $request->gender,
@@ -28,7 +28,8 @@ class ShoppingController extends Controller
                 ->orderBy('count', 'desc')
                 ->limit(15)
                 ->get()
-                ->pluck('product');
+                ->pluck('product')
+                ->paginate(20);
         }
 
         if($request->msv == 'true'){
@@ -37,8 +38,11 @@ class ShoppingController extends Controller
                 ->limit(15)
                 ->get()
                 ->unique('product_id')
-                ->pluck('product');
+                ->pluck('product')
+                ->paginate(20);
         }
+
+        $products->appends(request()->query())->links('vendor.pagination.tailwind');
 
         $DB = Product::all();
 
