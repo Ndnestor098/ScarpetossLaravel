@@ -54,19 +54,11 @@ class AdminController extends Controller
 
     public function addAdmin(Request $request)
     {
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
-            'unique' => 'El campo :attribute ya está en uso.',
-            'confirmed' => 'Las claves no coinciden.',
-        ];
-    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-        ], $messages);
+        ]);
 
         if ($validator->fails()) {
             // Validación fallida

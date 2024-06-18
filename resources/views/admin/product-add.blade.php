@@ -72,7 +72,7 @@
                                     @foreach ($sizes as $item)
                                         <div>
                                             <input id="sizes" name="sizes[]" type="checkbox" value="{{$item->sizes}}">
-                                            <label for="">Talla {{$item->sizes}}</label> 
+                                            <label for="">Talla {{rtrim(rtrim(number_format($item->sizes, 2), '0'), '.')}}</label> 
                                         </div>
                                     @endforeach
                                 </div>

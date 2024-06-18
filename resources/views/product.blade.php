@@ -37,7 +37,7 @@
                         <select name="sizes" id="sizes">
                             <option value="" disabled selected>Seleccione una talla:</option>
                             @foreach ($sizes as $item)
-                                <option value="{{$item->sizes}}">Talla {{$item->sizes}}</option>
+                                <option value="{{$item->sizes}}">Talla {{rtrim(rtrim(number_format($item->sizes, 2), '0'), '.')}}</option>
                             @endforeach
                         </select>
                         

@@ -32,23 +32,14 @@ class LoginController extends Controller
      * Store a newly created resource in storage.
      */
     public function register(Request $request)
-    {
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
-            'unique' => 'El campo :attribute ya está en uso.',
-            'confirmed' => 'Las claves no coinciden.',
-            'terms.accepted' => 'Debes aceptar los términos y condiciones para continuar.'
-        ];  
-
+    { 
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'terms' => 'accepted',
-        ], $messages);
-    
+        ]);
+
         if ($validator->fails()) {
             // Validación fallida
             return redirect(route("register"))->withErrors($validator);
@@ -70,20 +61,11 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'email' => 'El campo :attribute debe ser una dirección de correo electrónico válida.',
-            'unique' => 'El campo :attribute ya está en uso.',
-            'confirmed' => 'La confirmación de la contraseña no coincide para el usuario :name con correo electrónico :email.',
-            'terms.accepted' => 'Debes aceptar los términos y condiciones para continuar.'
-        ]; 
-
         // Validar los datos del formulario de inicio de sesión
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required',
-        ], $messages);
+        ]);
 
         if ($validator->fails()) {
             // Validación fallida

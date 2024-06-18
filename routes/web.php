@@ -59,36 +59,36 @@ Route::controller(ClientController::class)->group(function(){
 });
 
 //===============================================Area de Administrador=================================================
-Route::controller(AdminController::class)->group(function(){
-    Route::get("/client/admin", "index")->name("admin")->middleware(["auth", AdminMiddleware::class]);
+Route::middleware(["auth", AdminMiddleware::class])->controller(AdminController::class)->group(function(){
+    Route::get("/client/admin", "index")->name("admin");
 
     //==============Usuarios=============
-    Route::get("/client/admin/users", "showUsers")->name("admin.users")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/users", "showUsers")->name("admin.users");
 
-    Route::delete("/client/admin/users", "deleteUser")->middleware(["auth", AdminMiddleware::class]);
+    Route::delete("/client/admin/users", "deleteUser");
 
-    Route::get("/client/admin/users/edit", "baseAdmin")->name("admin.base")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/users/edit", "baseAdmin")->name("admin.base");
 
-    Route::put("/client/admin/users/edit", "addAdmin")->name("admin.add")->middleware(["auth", AdminMiddleware::class]);
+    Route::put("/client/admin/users/edit", "addAdmin")->name("admin.add");
 
 
     //==============Productos=============
-    Route::get("/client/admin/product", "showProduct")->name("admin.product")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/product", "showProduct")->name("admin.product");
 
     //Crear Productos
-    Route::get("/client/admin/product/add", "showProductAdd")->name("admin.product.add")->middleware(["auth", AdminMiddleware::class]);
-    Route::post("/client/admin/product/add", "createProduct")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/product/add", "showProductAdd")->name("admin.product.add");
+    Route::post("/client/admin/product/add", "createProduct");
 
     //Editar Productos
-    Route::get("/client/admin/product/edit", "showProductUpdate")->name("admin.product.edit")->middleware(["auth", AdminMiddleware::class]);
-    Route::post("/client/admin/product/edit", "updateProduct")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/product/edit", "showProductUpdate")->name("admin.product.edit");
+    Route::post("/client/admin/product/edit", "updateProduct");
 
     //Eliminar Productos
-    Route::delete("/client/admin/product", "deleteProduct")->middleware(["auth", AdminMiddleware::class]);
+    Route::delete("/client/admin/product", "deleteProduct");
 
 
     //==============Ventas=============
-    Route::get("/client/admin/sell", "showSell")->name("admin.sell")->middleware(["auth", AdminMiddleware::class]);
+    Route::get("/client/admin/sell", "showSell")->name("admin.sell");
 });
 
 //===============================================Area de cart=================================================

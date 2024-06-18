@@ -33,7 +33,7 @@ class ClientController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'password' => 'required|string|min:8',
+            'password' => 'required|string',
         ]);
 
         if ($validator->fails()) {
@@ -68,16 +68,10 @@ class ClientController extends Controller
      */
     public function editPassword(Request $request)
     {
-        $messages = [
-            'required' => 'El campo :attribute es obligatorio.',
-            'string' => 'El campo :attribute debe ser una cadena de caracteres.',
-            'confirmed' => 'Las claves nuevas no coinciden.',
-        ];  
-
         $validator = Validator::make($request->all(), [
             'password' => 'required',
             'password_new' => 'required|string|min:8|confirmed',
-        ], $messages);
+        ]);
 
         if ($validator->fails()) {
             // Validación fallida

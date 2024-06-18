@@ -37,28 +37,25 @@ class Product extends Model
         $this->attributes['gender'] = strtolower($value);
     }
 
-    public function scopeGender($query, $request)
+    public function scopeGender($query, $gender)
     {
-        if($request)
-            return $query->where('gender', $request);
+        if($gender)
+            return $query->where('gender', $gender);
     }
 
-    public function scopeOrders($query, $request)
+    public function scopeOrders($query, $orderBy)
     {
-        if($request == 'DESCLetra'){
-            return $query->orderBy('name', 'DESC');
-        }
-
-        if($request == 'ASCLetra'){
-            return $query->orderBy('name', 'ASC');
-        }
-
-        if($request == 'ASCPrecio'){
-            return $query->orderBy('price', 'ASC');
-        }
-
-        if($request == 'DESCPrecio'){
-            return $query->orderBy('price', 'DESC');
+        switch ($orderBy) {
+            case 'price_asc':
+                return $query->orderBy('price', 'asc'); 
+            case 'price_desc':
+                return $query->orderBy('price', 'desc');
+            case 'name_asc':
+                return $query->orderBy('name', 'asc');
+            case 'name_desc':
+                return $query->orderBy('name', 'desc');
+            default:
+                return $query->orderBy('created_at', 'desc');
         }
     }
 }

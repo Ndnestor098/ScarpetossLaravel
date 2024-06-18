@@ -83,7 +83,7 @@
                                                     @endif
                                                 @endforeach
                                                 >
-                                            <label for="sizes">Talla {{$item->sizes}}</label> 
+                                            <label for="sizes">Talla {{rtrim(rtrim(number_format($item->sizes, 2), '0'), '.')}}</label> 
                                         </div>
                                     @endforeach
                                 </div>

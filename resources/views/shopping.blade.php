@@ -19,7 +19,7 @@
                         <a href="{{ request()->fullUrlWithQuery(['gender' => 'hombre']) }}"><div class="content-product">
                             <p class="title-content-cell">Hombre</p>
                             <p class="max-content-cell">
-                                {{$DB->where("gender", 'hombre')->count()}}
+                                {{$totalHombre}}
                             </p>
                         </div></a>
                     </div>
@@ -27,7 +27,7 @@
                         <a href="{{ request()->fullUrlWithQuery(['gender' => 'mujer']) }}"><div class="content-product">
                             <p class="title-content-cell">Mujeres</p>
                             <p class="max-content-cell">
-                                {{$DB->where("gender", 'mujer')->count()}}
+                                {{$totalMujer}}
                             </p>
                         </div></a>
                     </div>
@@ -35,7 +35,7 @@
                         <a href="{{ request()->fullUrlWithQuery(['gender' => 'niño']) }}"><div class="content-product">
                             <p class="title-content-cell">Niños</p>
                             <p class="max-content-cell">
-                                {{$DB->where("gender", 'niño')->count()}}
+                                {{$totalNiño}}
                             </p>
                         </div></a>
                     </div>
@@ -43,7 +43,7 @@
                         <a href="{{ request()->fullUrlWithQuery(['gender' => 'unisex']) }}"><div class="content-product">
                             <p class="title-content-cell">Unisex</p>
                             <p class="max-content-cell">
-                                {{$DB->where("gender", 'unisex')->count()}}
+                                {{$totalUnisex}}
                             </p>
                         </div></a>
                     </div>
@@ -52,30 +52,32 @@
             </div>
 
             <div class="productos">
-                <div >
+                <div>
                     <form class="producto-filtro" action="" method="POST">
-                        @csrf
-                        @method('post')
-                        <div class="producto-opcion">
-                            <label for="order-by">Ordenar por:</label>
-                            <select name="order-by" id="order-by" class="cursor-pointer">
-                                <option value="" selected disabled>Recomendados   </option>
-                                <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'ASCLetra']) }}" @if(request()->get("orderBy") == 'ASCLetra') selected @endif>Nombre: A - Z</option>
-                                <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'DESCLetra']) }}" @if(request()->get("orderBy") == 'DESCLetra') selected @endif>Nombre: Z - A</option>
-                                <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'ASCPrecio']) }}" @if(request()->get("orderBy") == 'ASCPrecio') selected @endif>Precio más bajo</option>
-                                <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'DESCPrecio']) }}" @if(request()->get("orderBy") == 'DESCPrecio') selected @endif>Precio más alto</option>
-                            </select>
-                        </div>
+                        @if (!request()->has('moda') && !request()->has('msv'))
+                            @csrf
+                            @method('post')
+                            <div class="producto-opcion">
+                                <label for="order-by">Ordenar por:</label>
+                                <select style="padding-right: 35px" name="order-by" id="order-by" class="cursor-pointer">
+                                    <option value="" selected disabled>Buscar Por: </option>
+                                    <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'name_asc']) }}" @if(request()->get("orderBy") == 'name_asc') selected @endif>Nombre: A - Z</option>
+                                    <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'name_desc']) }}" @if(request()->get("orderBy") == 'name_desc') selected @endif>Nombre: Z - A</option>
+                                    <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'price_asc']) }}" @if(request()->get("orderBy") == 'price_asc') selected @endif>Precio más bajo</option>
+                                    <option value="{{ request()->fullUrlWithQuery(['orderBy' => 'price_desc']) }}" @if(request()->get("orderBy") == 'price_desc') selected @endif>Precio más alto</option>
+                                </select>
+                            </div>
 
-                        <div class="cantidad-producto">
-                            <p class="text-sm font-normal">Resultado: {{$DB->count()}}</p>
-                        </div>
-                        <div class="div-buscar">
-                            <button type="submit">Buscar</button>
-                        </div>
+                            <div class="cantidad-producto">
+                                <p class="text-sm font-normal">Resultado: {{$totalProducts}}</p>
+                            </div>
+                            <div class="div-buscar">
+                                <button type="submit">Buscar</button>
+                            </div>
+                        @endif
                     </form>
                 </div>
-
+                
                 <div class="catalogo">
                     <div class="contenido-catalogo">
                         @foreach ($products as $x)

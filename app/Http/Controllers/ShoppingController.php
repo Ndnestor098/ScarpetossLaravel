@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Sell;
 use App\Models\Trending;
+use App\Services\ShoppingServices;
 use Illuminate\Http\Request;
 
 class ShoppingController extends Controller
@@ -12,41 +13,31 @@ class ShoppingController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request, ShoppingServices $requestShopping)
     {
-        $products = Product::gender($request->gender)
-                ->orders($request->orderBy)
-                ->paginate(20);
+        // Obtener los parámetros de la consulta de la URL
+        $gender = $request->query('gender');
+        $orderBy = $request->query('orderBy');
+        $page = $request->query('page', 1);
 
-        $products->append([
-            "gender" => $request->gender,
-            "orderBy" => $request->orderBy,
+        //Llamar al servicio que controla toda la consulta a la base de datos
+        $products = $requestShopping->search($request, $gender, $orderBy, $page);
+
+        // Obtener totales de productos
+        $totalProducts = Product::count();
+        $totalNiño = Product::where('gender', 'niño')->count();
+        $totalHombre = Product::where('gender', 'hombre')->count();
+        $totalMujer = Product::where('gender', 'mujer')->count();
+        $totalUnisex = Product::where('gender', 'unisex')->count();
+
+        return view("shopping", [
+            "products" => $products,
+            "totalProducts" => $totalProducts,
+            "totalNiño" => $totalNiño,
+            "totalHombre" => $totalHombre,
+            "totalMujer" => $totalMujer,
+            "totalUnisex" => $totalUnisex
         ]);
-
-        if($request->moda == 'true'){
-            $products = Trending::with('product')
-                ->orderBy('count', 'desc')
-                ->limit(15)
-                ->get()
-                ->pluck('product')
-                ->paginate(20);
-        }
-
-        if($request->msv == 'true'){
-            $products = Sell::with('product')
-                ->orderBy('count', 'desc')
-                ->limit(15)
-                ->get()
-                ->unique('product_id')
-                ->pluck('product')
-                ->paginate(20);
-        }
-
-        $products->appends(request()->query())->links('vendor.pagination.tailwind');
-
-        $DB = Product::all();
-
-        return view("shopping", ["DB"=>$DB, "products"=>$products]);
     }
 
     public function search(Request $request)
