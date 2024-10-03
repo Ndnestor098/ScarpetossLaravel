@@ -8,34 +8,15 @@
     <main>
         <!-- Contenido de la portada principal -->
         <div class="Portada-usuario" style="padding-bottom: 0">
-            <div class="panel-cuenta">
-                <h2>Mi cuenta</h2>
-                <div class="opciones">
-                    <a href="{{route("client")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Panel de cuenta</p>
-                    </div></a>
-                    <a href="{{route("admin.product")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Productos</p>
-                    </div></a>
-                    <a href="{{route("admin.users")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Usuarios</p>
-                    </div></a>
-                    <a href="{{route("admin.sell")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Ventas</p>
-                    </div></a>
-                    <a href="{{route("logout")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Cerrar sesion</p>
-                    </div></a>
-                </div>
-            </div>
+            @include('components.panel')
+
             <div class="info-cuenta">
                 <div class="saludo">
                     <h3>Crear Administrador</h3>
                 </div>
                 <div class="datos">
-                        <form class="edit-product enviar" action="{{route('admin.add')}}" method="POST">
+                        <form class="edit-product enviar" action="{{route('users.store')}}" method="POST">
                             @csrf
-                            @method('put')
                             <div>
                                 <label for="name">Nombre</label>
                                 <input type="text" name="name" id="name">

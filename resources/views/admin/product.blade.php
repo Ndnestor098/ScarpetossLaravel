@@ -12,26 +12,8 @@
     <main>
         <!-- Contenido de la portada principal -->
         <div class="Portada-usuario" style="padding-bottom: 0">
-            <div class="panel-cuenta">
-                <h2 class="font-bold text-xl">Mi cuenta</h2>
-                <div class="opciones">
-                    <a href="{{route("client")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Panel de cuenta</p>
-                    </div></a>
-                    <a href="{{route("admin.product")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Productos</p>
-                    </div></a>
-                    <a href="{{route("admin.users")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Usuarios</p>
-                    </div></a>
-                    <a href="{{route("admin.sell")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Ventas</p>
-                    </div></a>
-                    <a href="{{route("logout")}}" style="width: fit-content;"><div class="celda-opciones">
-                        <p>Cerrar sesion</p>
-                    </div></a>
-                </div>
-            </div>
+            @include('components.panel')
+
             <div class="info-cuenta">
                 <div class="saludo">
                     <h3>Nuestros Productos</h3>
@@ -51,7 +33,7 @@
                         </tr>
                         <?php $valor = 1 ?>
                         @foreach ($datos as $x)
-                            <tr class="productos_{{$valor}}">
+                            <tr>
                                 <td>{{Str::limit($x->name,20)}}</td>
                                 <td class="none">{{Str::limit($x->description,20)}}</td>
                                 <td class="center">${{$x->price}}</td>
@@ -72,11 +54,6 @@
                                     <td class="delete"><button type="submit">Eleminar</button></td>
                                 </form>
                             </tr>
-                            @if ($valor == 1)
-                                <?php $valor = 0 ?>
-                            @else
-                                <?php $valor = 1 ?>
-                            @endif
                         @endforeach
                         
                     </table>

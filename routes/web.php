@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
@@ -62,16 +63,6 @@ Route::controller(ClientController::class)->group(function(){
 Route::middleware(["auth", AdminMiddleware::class])->controller(AdminController::class)->group(function(){
     Route::get("/client/admin", "index")->name("admin");
 
-    //==============Usuarios=============
-    Route::get("/client/admin/users", "showUsers")->name("admin.users");
-
-    Route::delete("/client/admin/users", "deleteUser");
-
-    Route::get("/client/admin/users/edit", "baseAdmin")->name("admin.base");
-
-    Route::put("/client/admin/users/edit", "addAdmin")->name("admin.add");
-
-
     //==============Productos=============
     Route::get("/client/admin/product", "showProduct")->name("admin.product");
 
@@ -89,6 +80,14 @@ Route::middleware(["auth", AdminMiddleware::class])->controller(AdminController:
 
     //==============Ventas=============
     Route::get("/client/admin/sell", "showSell")->name("admin.sell");
+});
+
+//===============================================Area de Administrador / Usuarios =================================================
+Route::middleware(["auth", AdminMiddleware::class])->controller(UserController::class)->group(function () {
+    Route::get("/client/admin/users", "index")->name("users");
+    Route::get("/client/admin/users/create", 'create')->name('users.create');
+    Route::post("/client/admin/users", "store")->name("users.store");
+    Route::delete("/client/admin/users/{id}", "delete")->name('users.delete');
 });
 
 //===============================================Area de cart=================================================
@@ -125,7 +124,9 @@ Route::post("/cookie", function(Request $request){
         $expiracionEnMinutos = 10 * 24 * 60;
         // Agregar la cookie a la respuesta
         $response->cookie('Remember_cookie', 'yes_acept', $expiracionEnMinutos);
+
         info($response);
+
         return back()->withCookie('Remember_cookie', 'yes_acept', $expiracionEnMinutos);
     }
 })->name("cookie");

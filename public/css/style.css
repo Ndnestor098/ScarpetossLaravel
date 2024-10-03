@@ -1612,7 +1612,7 @@ main{
 
 /* ===========================================CONTENIDO - Ad=========================================== */
 .table-estadisticas{
-    .productos_1{
+    tr:nth-child(odd) {
         background-color: #cfcfcf96;
     }
     tr{   

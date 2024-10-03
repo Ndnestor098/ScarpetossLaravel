@@ -27,7 +27,7 @@ class AdminController extends Controller
 
         $datos->appends(request()->query())->links('vendor.pagination.tailwind');
 
-        return view("admin.admin-product", ['datos' => $datos]);
+        return view("admin.product", ['datos' => $datos]);
     }
 
     public function showUsers(Request $request)
@@ -44,52 +44,12 @@ class AdminController extends Controller
         return view("admin.admin-sell");
     }
 
-    //=============================================Area de edicion de usuario Administrador=============================================
-    public function baseAdmin(Request $request)
-    {
-        return view("admin.admin-add");
-
-        return redirect()->back();
-    }
-
-    public function addAdmin(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            // Validación fallida
-            return back()->withErrors($validator);
-        }
-
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->is_admin = true;
-
-        $user->save();
-
-        return redirect(route('admin.users'));
-    }
-
-    public function deleteUser(Request $request)
-    {
-        $user = User::find(intval($request->id));
-        $user->delete();
-
-        return back();
-    }
-
     //==================================================Area de edicion de Productos====================================================
     public function showProductAdd(Request $request)
     {
         $sizes = Size::orderBy('sizes')->get();
         
-        return view("admin.product-add", ['sizes' => $sizes]);
+        return view("admin.product_create", ['sizes' => $sizes]);
     }
 
     public function createProduct(Request $request, AdminServices $requestAdmin)
@@ -135,7 +95,7 @@ class AdminController extends Controller
 
         $sizes = Size::orderBy('sizes')->get();
 
-        return view("admin.product-edit", ['datos' => $datos, 'sizes'=>$sizes]);
+        return view("admin.product_update", ['datos' => $datos, 'sizes'=>$sizes]);
     }
 
     public function updateProduct(Request $request, AdminServices $requestAdmin)
