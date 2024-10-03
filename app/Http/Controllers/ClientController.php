@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
@@ -38,14 +38,11 @@ class ClientController extends Controller
 
         if ($validator->fails()) {
             // Validación fallida
-            return Redirect::back()->withErrors(['errorname' => 'La clave debe tener min. 8 caracteres.']);
+            return redirect()->back()->withErrors(['errors' => 'La clave debe tener min. 8 caracteres.']);
         }
 
-        // Buscar al usuario por su ID
-        $credentials = $request->only('name', 'password');
-
-        if(Hash::check($credentials['password'], auth()->user()->password)){
-            $user = auth()->user();
+        if(Hash::check($request->password, auth()->user()->password)){
+            $user = User::find(auth()->user()->id);
 
             if($request->address > 0){
                 $user->name = $request->name;
@@ -53,11 +50,11 @@ class ClientController extends Controller
                 $user->save();
 
             }else{
-                return Redirect::back()->withErrors(['errorname' => 'Error en la direccion.']);
+                return redirect()->back()->withErrors(['errors' => 'Error en la direccion.']);
             }
 
         }else{
-            return Redirect::back()->withErrors(['errorname' => 'La clave no es la misma.']);
+            return redirect()->back()->withErrors(['errors' => 'La clave no es la misma.']);
         }
 
         return back();
@@ -75,19 +72,19 @@ class ClientController extends Controller
 
         if ($validator->fails()) {
             // Validación fallida
-            return Redirect::back()->withErrors(['errorpassword' => $validator->errors()->get("password_new")]);
+            return redirect()->back()->withErrors(['errorPassword' => $validator->errors()->get("password_new")]);
         }
 
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
 
         if (Hash::check($request->password, $user->password)) {
-            $user->password = Hash::make($request->nueva_contraseña);
+            $user->password = Hash::make($request->password_new);
             $user->save();
 
             $request->session()->regenerate();
-            return Redirect::back()->withErrors(['errorpassword' => '']);
+            return redirect()->back()->withErrors(['errorPassword' => '']);
         }else{
-            return Redirect::back()->withErrors(['errorpassword' => 'La contraseña actual es incorrecta.']);
+            return redirect()->back()->withErrors(['errorPassword' => 'La contraseña actual es incorrecta.']);
         }
 
     }

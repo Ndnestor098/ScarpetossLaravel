@@ -45,15 +45,17 @@ class LoginController extends Controller
             return redirect(route("register"))->withErrors($validator);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = Hash::make($request->password); // Aplicar el hashing automático
-        $user->is_admin = false;
-        $user->save();
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        Auth::attempt($user);
+        $request->session()->regenerate();
 
         $request->session()->regenerate();
-        return redirect(route("login"));
+        return redirect(route("home"));
     }
 
     /**
