@@ -59,7 +59,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/image/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-
+    {{-- @vite('resources/css/app.css') --}}
 </head>
 <body>
 

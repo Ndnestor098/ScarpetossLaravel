@@ -60,6 +60,7 @@
     <meta name="msapplication-TileImage" content="/image/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     @yield('link')
+    {{-- @vite('resources/css/app.css') --}}
 </head>
 <body  @if(!request()->hasCookie('Remember_cookie')) class="no-scroll" @endif>
     <!-- ===========================================COOKIE=========================================== -->

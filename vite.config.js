@@ -11,4 +11,9 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        historyApiFallback: true, 
+        host: '192.168.1.117',  // Permite conexiones desde cualquier IP
+        port: 3000,       // Asegúrate de que el puerto sea el correcto
+      },
 });

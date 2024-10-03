@@ -36,25 +36,27 @@ class LoginController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'terms' => 'accepted',
+            'password' => 'required|string|min:8',
+            'terms' => 'required|accepted',
         ]);
 
         if ($validator->fails()) {
-            // Validación fallida
-            return redirect(route("register"))->withErrors($validator);
+            return redirect(route("register"))->withErrors($validator)->withInput();
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
+        User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password'))
         ]);
 
-        Auth::attempt($user);
-        $request->session()->regenerate();
+        Auth::attempt([
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ]);
 
         $request->session()->regenerate();
+
         return redirect(route("home"));
     }
 
@@ -68,9 +70,8 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+        
         if ($validator->fails()) {
-            // Validación fallida
             return redirect(route("register"))->withErrors($validator);
         }
 
@@ -86,7 +87,7 @@ class LoginController extends Controller
         }
         
         // Si el inicio de sesión falla, redirigir de vuelta al formulario de inicio de sesión con un mensaje de error
-        return redirect(route("login"))->with('errors', 'Las credenciales proporcionadas son incorrectas.');
+        return redirect(route("login"))->withErrors(['Las credenciales proporcionadas son incorrectas.'])->withInput();
     }
 
     /**
