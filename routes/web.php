@@ -103,9 +103,9 @@ Route::controller(CartController::class)->group(function (){
 Route::controller(StripeController::class)->group(function (){
     Route::get('/register-card', 'index')->name('stripe.index')->middleware('auth');
     Route::post('/register-card', 'createPayment')->name('stripe.createPay')->middleware('auth');
-    Route::get('/payment', 'processPayment')->name('stripe.processPayment')->middleware('auth');
-    Route::get("/client/details/payment", "showEditPayment")->name("showEditPayment")->middleware("auth");
-    Route::post('/client/details/update-payment', 'updatePayment')->name('update-payment-method')->middleware("auth");
+    Route::get('/payment', 'processPayment')->name('payment.process')->middleware('auth');
+    Route::get("/client/details/payment", "edit")->name("payment.edit")->middleware("auth");
+    Route::post('/client/details/update-payment', 'update')->name('payment.update')->middleware("auth");
     Route::get('/client/details/purchase', 'showPurchase')->name('purchase')->middleware("auth");
 });
 

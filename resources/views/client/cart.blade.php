@@ -108,7 +108,7 @@
                         <div class="button-pagar">
                             @if (auth()->user()->address)
                                 @if (auth()->user()->card_last_four)
-                                    <a href="{{route('stripe.processPayment', ['amount'=>$valor])}}"><span>COMPRAR</span></a>
+                                    <a href="{{route('payment.process', ['amount'=>$valor])}}"><span>COMPRAR</span></a>
                                 @else
                                     <a href="{{route("stripe.index")}}"><span>AGREGAR METODO DE PAGO</span></a>
                                 @endif

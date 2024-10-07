@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Sell;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Customer;
@@ -10,8 +11,6 @@ use Stripe\Charge;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
-use Stripe\SetupIntent;
 
 class StripeController extends Controller
 {
@@ -39,7 +38,7 @@ class StripeController extends Controller
         ]);
 
         // Guardar detalles no sensibles en la base de datos
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
         $user->stripe_customer_id = $customer->id;
         $user->card_last_four = substr($request->stripeToken, -4); // Últimos 4 dígitos del número de tarjeta
         $user->save();
@@ -66,20 +65,6 @@ class StripeController extends Controller
             return redirect()->route('cart')->with('error', 'No hay productos en el carrito.');
         }
 
-        // Registrar cada venta
-        foreach ($products as $item) {
-            Sell::create([
-                'user_id' => Auth::id(),
-                'product_id' => $item->product_id,
-                'size' => $item->sizes,
-                'price' => $item->product->price,
-                'count' => $item->count_total,
-            ]);
-        }
-
-        // Vaciar el carrito del usuario
-        Cart::where('user_id', Auth::id())->delete();
-
         // Convertir el monto a centavos
         $amountInCents = intval(round($request->amount * 100)); // Redondear para evitar problemas con decimales
 
@@ -103,6 +88,20 @@ class StripeController extends Controller
                 'currency' => 'usd',
                 'description' => 'Pago de Zapatos en Scarpetoss',
             ]);
+
+            // Registrar cada venta
+            foreach ($products as $item) {
+                Sell::create([
+                    'user_id' => Auth::id(),
+                    'product_id' => $item->product_id,
+                    'size' => $item->sizes,
+                    'price' => $item->product->price,
+                    'count' => $item->count_total,
+                ]);
+            }
+
+            // Vaciar el carrito del usuario
+            Cart::where('user_id', Auth::id())->delete();
         } catch (\Exception $e) {
             // Manejar errores de Stripe
             return redirect()->route('stripe.createPayment')->with('error', 'Hubo un problema al procesar el pago: ' . $e->getMessage());
@@ -112,19 +111,19 @@ class StripeController extends Controller
         return redirect()->route('thanks')->with('success', 'Pago realizado correctamente. ¡Gracias por su compra!');
     }
 
-    public function showEditPayment()
+    public function edit()
     {
         return view('client.payment');
     }
 
-    public function updatePayment(Request $request)
+    public function update(Request $request)
     {
         // Validar la solicitud
         $request->validate([
             'password' => 'required|string|min:8',
         ]);
 
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
 
         if(Hash::check($request->password, $user->password)){
 
