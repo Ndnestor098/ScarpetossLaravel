@@ -16,7 +16,7 @@ class UserController extends Controller
     }
 
     public function create(){
-        return view('admin.create_users');
+        return view('admin.users_create');
     }
     
     public function store(Request $request)
@@ -32,17 +32,19 @@ class UserController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        User::create([
+        $user = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
-            'is_admin' => true,
         ]);
 
-        return redirect(route('admin.users'));
+        $user->is_admin = true;
+        $user->save();
+
+        return redirect(route('users'));
     }
 
-    public function delete(Request $request)
+    public function destroy(Request $request)
     {
         $user = User::find(intval($request->id));
         $user->delete();

@@ -3,37 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Size;
-use App\Models\Trending;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function __invoke(Request $request)
+    public function __invoke($slug)
     {
-        $product = Product::where("name", $request->shoes)->first();
+        $product = Product::where("slug", $slug)->where('stock', '!=', 0)->first();
+
+        
         
         if($product){
-            $products = Product::limit(8)->get();
+            $product->visited = intval($product->visited) + 1;
 
-            $sizes = $product->sizes;
+            $product->save();
 
-            $trending = Trending::where('product_id', $product->id)->first();
-            if($trending){
-                $trending->count = intval($trending->count) + 1;
-                $trending->save();
+            $carousel = Product::limit(8)->where('stock', '!=', 0)->inRandomOrder()->get();
 
-            }else{
-                Trending::create([
-                    'product_id' => $product->id,
-                    'count' => 1,
-                ]);
+            $carousel->transform(function($carousel){
+                $images = [];
+                foreach(json_decode($carousel->images, true) as $item){
+                    array_push($images, Storage::url('public/'.$item));
+                }
+                $carousel->images = $images;
+                return $carousel;
+            });
+
+            $images = [];
+    
+            foreach (json_decode($product->images, true) as $item) {
+                array_push($images, Storage::url('public/' . $item));
             }
+            
+            $product->images = $images;
 
-            return view("product", ["product"=>$product, "products"=>$products, 'sizes'=>$sizes]);
+            return view("product", ["product"=>$product, "carousel"=>$carousel]);
         }
 
         return redirect(route("home"));

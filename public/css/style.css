@@ -1264,11 +1264,33 @@ main{
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
+        gap: 20px;
 
-        img{
+        .principal-img{
             height: 400px;
             width: 400px;
             object-fit: cover;
+        }
+
+        .content-images{
+            display: flex;
+            gap: 20px;
+
+
+            .alls-images{
+                box-shadow: 2px 24px 50px -28px #435334e7;
+                cursor: pointer;
+                transition: all ease .4s;
+            }
+
+            .alls-images:hover{
+                scale: 1.2;
+            }
+
+            .active-image{
+                border: 1px solid rgb(52, 117, 52);
+            }
         }
     }
 
@@ -1701,54 +1723,7 @@ main{
         }
     }
 
-    .container-input {
-        text-align: center;
-        background: #CEDEBD;
-        padding: 50px 0;
-        border-radius: 6px;
-        width: 100%;
-        border: 2px dashed #333333c2;
-        
-        display: flex;
-        align-content: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        text-align: center;
-
-        .inputfile {
-            width: 0.1px;
-            height: 0.1px;
-            opacity: 0;
-            overflow: hidden;
-            position: absolute;
-            z-index: -1;
-        }
-        
-        .cargar-imagen{
-            max-width: 100%;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 1.25rem;
-            color: #fff;
-            background-color: #435334;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            cursor: pointer;
-            display: inline-block;
-            overflow: hidden;
-        }
-        .drop-imagen, .o{
-            max-width: 100%;
-            font-size: 1.25rem;
-            color: #333333;
-            font-weight: 700;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            cursor: pointer;
-            display: inline-block;
-            overflow: hidden;
-        }
-    }
+    
     
     label{
         font-size: 19px;

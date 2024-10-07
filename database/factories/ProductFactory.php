@@ -21,10 +21,12 @@ class ProductFactory extends Factory
             "description" => $this->faker->text(),
             "price" => $this->faker->numberBetween(10,300),
             "gender" => $this->faker->randomElement(['mujer', 'hombre', 'niño', 'unisex']),
-            "imageP" => $this->faker->randomElement(['images/66537f0c06ab0.webp', 'images/6653803d8745d.webp', 'images/6648df9306523.webp', 'images/6648dfccca5d4.webp', 'images/6648ddc941a35.webp']),
-            "imageA" => $this->faker->randomElement(['images/66537f0c06ab0.webp', 'images/6653803d8745d.webp', 'images/6648df9306523.webp', 'images/6648dfccca5d4.webp', 'images/6648ddc941a35.webp']),
+            "images" => json_encode($this->faker->randomElement([['images/66537f0c06ab0.webp', 'images/TechWave.png'], ['images/6653803d8745d.webp', 'images/TechWave.png'], ['images/6648df9306523.webp', 'images/TechWave.png'], ['images/6648dfccca5d4.webp', 'images/TechWave.png'], ['images/6648ddc941a35.webp', 'images/TechWave.png']])),
             "stock" => $this->faker->numberBetween(50,150),
             "brand" => $this->faker->company(),
+            'visited' => fake()->numberBetween(0, 2000),
+            'sell' => fake()->numberBetween(0, 200),
+            'trending' => fake()->boolean()
         ];
     }
 }

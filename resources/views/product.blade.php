@@ -15,7 +15,13 @@
     <div class="Contenedor-Productos">
         
         <div class="part-img">
-            <img src="{{ Storage::url($product->imageP) }}" alt="zapato - {{$product->name}}">
+            <img src="{{ $product->images[0] }}" id="principal" class="principal-img" alt="zapato - {{$product->name}}">
+
+            <div class="content-images">
+                @foreach ($product->images as $image)
+                    <img class="alls-images" src="{{ $image }}" style="width: 100px;height:100px" alt="Item {{ $image }}">
+                @endforeach
+            </div>
         </div>
         <div class="info-producto">
             <div class="contenedor">
@@ -36,7 +42,7 @@
 
                         <select name="sizes" id="sizes">
                             <option value="" disabled selected>Seleccione una talla:</option>
-                            @foreach ($sizes as $item)
+                            @foreach ($product->sizes as $item)
                                 <option value="{{$item->sizes}}">Talla {{rtrim(rtrim(number_format($item->sizes, 2), '0'), '.')}}</option>
                             @endforeach
                         </select>
@@ -56,30 +62,8 @@
 
     <!-- Contenido de productos -->
     <p class="title-home">PRODUCTOS</p>
-    <div class="carrusel">
-        <div class="carrusel-content">
-            @foreach ($products as $x)
-                <a href="{{route("product", ["shoes"=>$x->name])}}">
-                    <div class="producto-carrusel">
-                        <div class="image-producto">
-                            <img src="{{ Storage::url($x->imageP) }}" alt="Zapato">
-                        </div>
+    @include('components.carousel')
 
-                        <div class="informacion-producto">
-                            <div class="title-producto">{{$x->name}}</div>
-                            <div class="precio-producto">${{$x->price}}</div></a>
-                            <a class="enlace" href="{{route("product", ["shoes"=>$x->name])}}">Vizualizar Producto</a>
-                        </div>
-                    </div>
-                
-            @endforeach
-
-            <div class="arrow">
-                <button class="left" onclick="sliderLeft()"><</button>
-                <button class="right" onclick="sliderRigth()">></button>
-            </div>
-        </div>
-    </div>
 
 
 </main>
@@ -90,4 +74,5 @@
     <script src="/js/style.js"></script>
     <script src="/js/slider.js"></script>
     <script src="/js/cart.js"></script>
+    <script src="/js/changeProduct.js"></script>
 @endsection

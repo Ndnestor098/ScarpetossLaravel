@@ -15,34 +15,28 @@
                     <h3>Crear Producto</h3>
                 </div>
                 <div class="datos">
-                        <form class="edit-product enviar" action="" method="POST" enctype="multipart/form-data">
+                        <form class="edit-product" action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('post')
-                            <input type="hidden" name="tipo" value="create">
-                            <input type="hidden" name="imageName"  class="name">
-
-                            <label for="image">Editar Imagen</label>
-                            <div class="container-input div" ondrop="dropHandle(event)" ondragover="dragOverHandler(event);">
-                                <input type="file" name="img"  id="img" class="inputfile">
-                                <label for="img" class="cargar-imagen">Cargar Imagen</label>
-                                <label for="img" class="o">o</label>
-                                <label for="img" class="drop-imagen">Arrastrar Imagen</label>
+                            <div class="container-input div">
+                                <label for="images" class="cargar-imagen">Subir imagenes</label>
+                                <input type="file" name="images[]" accept="image/*"required>
                             </div>
                             <div class="div">
                                 <label for="name">Nombre</label>
-                                <input type="text" name="name" required>
+                                <input type="text" name="name" autofocus value="{{ old('name') }}" required>
                             </div>
                             <div class="div">
-                                <label for="descripcion">Descripcion</label>
-                                <textarea type="text" name="descripcion" cols="30" rows="10" required></textarea>
+                                <label for="description">Descripcion</label>
+                                <textarea type="text" name="description" cols="30" rows="10" required>{{ old('description') }}</textarea>
                             </div>
                             <div class="div">
-                                <label for="precio">Precio</label>
-                                <input type="text" name="precio" value="" required>
+                                <label for="price">Precio</label>
+                                <input type="text" name="price" value="{{ old('price') }}" required>
                             </div>
                             <div class="div">
-                                <label for="genero">Genero</label>
-                                <select name="genero" id="genero"required>
+                                <label for="gender">Genero</label>
+                                <select name="gender" required>
+                                    <option value="" selected disabled>Selecciona el Genero del Producto</option>
                                     <option value="hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                     <option value="Niño">Niño</option>
@@ -65,10 +59,17 @@
                                 <input type="number" name="stock"  required>
                             </div>
                             <div class="div">
-                                <label for="proveedor">Proveedor</label>
-                                <input type="text" name="proveedor" required>
+                                <label for="supplier">Proveedor</label>
+                                <input type="text" name="supplier" required>
                             </div>
-                            <span class="error"></span>
+                            <span class="error" style="font-size: 12px">
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $error)
+                                        {{ $error }}
+                                        @break
+                                    @endforeach
+                                @endif
+                            </span>
                             <button type="submit" id="btn_actualizar">Crear</button>
                         </form>
                 </div>
@@ -80,5 +81,4 @@
 
 @section('files-js')
     <script src="/js/style.js"></script>
-    <script src="/js/drop.js"></script>
 @endsection 

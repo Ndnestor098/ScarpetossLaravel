@@ -12,42 +12,38 @@
 
             <div class="info-cuenta">
                 <div class="saludo">
-                    <h3>Producto: {{$datos->name}}</h3>
+                    <h3>Producto: {{$data->name}}</h3>
                 </div>
                 <div class="datos">
-                        <form class="edit-product enviar" action="" method="POST" enctype="multipart/form-data">
+                        <form class="edit-product" action="{{ route('products.update', ['id'=>$data->id]) }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('post')
-                            <input type="hidden" name="id" value="{{$datos->id}}">
-                            <input type="hidden" name="imageName" class="name">
-
+                            @method('PUT')
+                            
                             <label for="image">Editar Imagen</label>
-                            <div class="container-input div" ondrop="dropHandle(event)" ondragover="dragOverHandler(event);">
-                                <input type="file" name="img"  id="img" class="inputfile">
-                                <label for="img" class="cargar-imagen">Cargar Imagen</label>
-                                <label for="img" class="o">o</label>
-                                <label for="img" class="drop-imagen">Arrastrar Imagen</label>
+                            <div class="container-input div">
+                                <label for="images" class="cargar-imagen">Cargar Imagen</label>
+                                <input type="file" name="images[]" accept="image/*" id="images" required>
                             </div>
                             <div class="div">
                                 <label>Imagen Almacenada</label>
-                                <img src="{{ Storage::url($datos->imageP) }}" alt="imagen-almacenada" height="100px" width="100px">
+                                <img src="{{ Storage::url($data->images) }}" alt="imagen-almacenada" height="100px" width="100px">
                             </div>
                             <div class="div">
                                 <label for="name">Nombre</label>
-                                <input type="text" name="name" value="{{$datos->name}}" required>
+                                <input type="text" name="name" value="{{$data->name}}" required>
                             </div>
                             <div class="div">
-                                <label for="descripcion">Descripcion</label>
-                                <textarea type="text" name="descripcion" cols="30" rows="10" required>{{$datos->description}}</textarea>
+                                <label for="description">Descripcion</label>
+                                <textarea type="text" name="description" cols="30" rows="10" required>{{$data->description}}</textarea>
                             </div>
                             <div class="div">
-                                <label for="precio">Precio</label>
-                                <input type="text" name="precio" value="{{$datos->price}}" required>
+                                <label for="price">Precio</label>
+                                <input type="text" name="price" value="{{$data->price}}" required>
                             </div>
                             <div class="div">
-                                <label for="genero">Genero</label>
-                                <select name="genero" id="genero"required>
-                                    <option value="{{$datos->gender}}">Seleccionado: {{$datos->gender}}</option>
+                                <label for="gender">Genero</label>
+                                <select name="gender" required>
+                                    <option value="{{$data->gender}}">Seleccionado: {{$data->gender}}</option>
                                     <option value="hombre">Hombre</option>
                                     <option value="Mujer">Mujer</option>
                                     <option value="Niño">Niño</option>
@@ -59,7 +55,7 @@
                                     @foreach ($sizes as $item)
                                         <div>
                                             <input id="sizes" name="sizes[]" type="checkbox" value="{{$item->sizes}}"
-                                                @foreach ($datos->sizes as $x)
+                                                @foreach ($data->sizes as $x)
                                                     @if ($item->sizes == $x->sizes)
                                                         checked
                                                     @endif
@@ -72,13 +68,20 @@
                             </div>
                             <div class="div">
                                 <label for="stock">Stock</label>
-                                <input type="number" name="stock" value="{{$datos->stock}}" required>
+                                <input type="number" name="stock" value="{{$data->stock}}" required>
                             </div>
                             <div class="div">
-                                <label for="proveedor">Proveedor</label>
-                                <input type="text" name="proveedor" value="{{$datos->brand}}" required>
+                                <label for="supplier">Proveedor</label>
+                                <input type="text" name="supplier" value="{{$data->brand}}" required>
                             </div>
-                            <span class="error"></span>
+                            <span class="error" style="font-size: 12px">
+                                @if ($errors->any())
+                                    @foreach ($errors->all() as $error)
+                                        {{ $error }}
+                                        @break
+                                    @endforeach
+                                @endif
+                            </span>
                             <button type="submit" id="btn_actualizar">Actualizar</button>
                         </form>
                     
@@ -91,5 +94,4 @@
 
 @section('files-js')
     <script src="/js/style.js"></script>
-    <script src="/js/drop.js"></script>
 @endsection 

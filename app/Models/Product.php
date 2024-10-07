@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -26,26 +27,28 @@ class Product extends Model
         return $this->hasMany(Sell::class);
     }
 
-    public function trending()
-    {
-        return $this->hasMany(Trending::class);
-    }
-
-    //Mutadores
     public function setGenderAttribute($value)
     {
         $this->attributes['gender'] = strtolower($value);
     }
 
-    public function scopeGender($query, $gender)
+    public function setNameAttribute($value)
     {
-        if($gender)
-            return $query->where('gender', $gender);
+        $this->attributes['name'] = $value;
+        $this->attributes['slug'] = Str::slug($value);
     }
 
-    public function scopeOrders($query, $orderBy)
+    public function scopeGender($query, $value)
     {
-        switch ($orderBy) {
+        if($value)
+            return $query->where('gender', $value);
+
+        return $query;
+    }
+
+    public function scopeOrders($query, $value)
+    {
+        switch ($value) {
             case 'price_asc':
                 return $query->orderBy('price', 'asc'); 
             case 'price_desc':
@@ -57,5 +60,29 @@ class Product extends Model
             default:
                 return $query->orderBy('created_at', 'desc');
         }
+    }
+
+    public function scopeVisited($query, $value)
+    {
+        if($value)
+            return $query->where('visited', 'ASC');
+
+        return $query;
+    }
+
+    public function scopeSell($query, $value)
+    {
+        if($value)
+            return $query->orderBy('sell', 'ASC')->where('sell', '!=', 0);
+
+        return $query;
+    }
+
+    public function scopeTrending($query, $value)
+    {
+        if($value)
+            return $query->where('trending', true);
+
+        return $query;
     }
 }

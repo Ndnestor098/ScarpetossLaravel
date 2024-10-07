@@ -126,8 +126,8 @@
                 <li><a href="{{route("shopping", ['gender'=>'mujer'])}}">Damas</a></li>
                 <li><a href="{{route("shopping", ['gender'=>'hombre'])}}">Caballeros</a></li>
                 <li><a href="{{route("shopping", ['gender'=>'niño'])}}">Niños</a></li>
-                <li><a href="{{route("shopping", ['moda'=>'true'])}}">Moda</a></li>
-                <li><a href="{{route("shopping", ['msv'=>'true'])}}">Mas vendidos</a></li>
+                <li><a href="{{route("shopping", ['trendingProducts'=>'true'])}}">Moda</a></li>
+                <li><a href="{{route("shopping", ['bestSellers'=>'true'])}}">Mas vendidos</a></li>
 
             </ul>
         </div>

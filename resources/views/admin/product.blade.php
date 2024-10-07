@@ -32,25 +32,21 @@
 
                         </tr>
                         <?php $valor = 1 ?>
-                        @foreach ($datos as $x)
+                        @foreach ($data as $item)
                             <tr>
-                                <td>{{Str::limit($x->name,20)}}</td>
-                                <td class="none">{{Str::limit($x->description,20)}}</td>
-                                <td class="center">${{$x->price}}</td>
-                                <td class="center none">{{$x->gender}}</td>
-                                <td class="center">{{$x->stock}}</td>
-                                <td class="center none">{{$x->brand}}</td>
+                                <td>{{Str::limit($item->name,20)}}</td>
+                                <td class="none">{{Str::limit($item->description,20)}}</td>
+                                <td class="center">${{$item->price}}</td>
+                                <td class="center none">{{$item->gender}}</td>
+                                <td class="center">{{$item->stock}}</td>
+                                <td class="center none">{{$item->brand}}</td>
 
-                                <form action="{{route("admin.product.edit")}}" method="GET">
-                                    @csrf
-                                    <input type="hidden" name="id" value="{{$x->id}}">
-                                    <td class="edit"><button type="submit">Editar</button></td>
-                                </form>
+                                <td class="edit" style="font-weight:600;text-align:center;color:#333333"><a href="{{ route('products.edit', ['id'=>$item->id]) }}" type="submit">Editar</a></td>
 
                                 <form action="" method="POST">
                                     @csrf
                                     @method('delete')
-                                    <input type="hidden" name="id" value="{{$x->id}}">
+                                    <input type="hidden" name="id" value="{{$item->id}}">
                                     <td class="delete"><button type="submit">Eleminar</button></td>
                                 </form>
                             </tr>
@@ -62,13 +58,13 @@
             
         </div>
         <div class="area-button">
-            <form action="{{route("admin.product.add")}}" method="GET">
+            <form action="{{route("products.create")}}" method="GET">
                 @csrf
                 <button type="submit" class="add">Agregar Productos</button>
             </form>
         </div>
         <div class="p-5">
-            {{$datos->links()}}
+            {{$data->links()}}
         </div>
     </main>
 @endsection

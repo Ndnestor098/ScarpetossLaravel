@@ -78,20 +78,20 @@
                     </form>
                 </div>
                 
-                <div class="catalogo">
+                <div class="catalogo"> 
                     <div class="contenido-catalogo">
                         @foreach ($products as $x)
                                 <div class="producto-carrusel">
-                                    <a href="{{route("product", ["shoes"=>$x->name])}}">
+                                    <a href="{{route('products.show', ["slug"=>$x->slug])}}">
 
                                         <div class="image-producto">
-                                            <img src='{{ Storage::url('public/'.$x->imageP) }}' alt="Zapato">
+                                            <img src='{{ $x->images[0] }}' alt="Zapato">
                                         </div>
                                 
                                         <div class="informacion-producto">
                                             <div class="title-producto">{{$x->name}}</div>
                                             <div class="precio-producto">${{$x->price}}</div>
-                                            <a class="enlace" href="{{route("product", ["shoes"=>$x->name])}}">Vizualizar Producto</a>
+                                            <a class="enlace" href="{{route('products.show', ["slug"=>$x->slug])}}">Vizualizar Producto</a>
                                         </div>
                                     </a>
                                 </div>

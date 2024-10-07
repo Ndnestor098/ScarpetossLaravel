@@ -15,7 +15,6 @@ class AddStripeFieldsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('stripe_customer_id')->nullable()->after('remember_token');
             $table->string('card_last_four')->nullable()->after('stripe_customer_id');
-            $table->string('address')->nullable();
         });
     }
 
@@ -29,7 +28,6 @@ class AddStripeFieldsToUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('stripe_customer_id');
             $table->dropColumn('card_last_four');
-            $table->dropColumn('address');
         });
     }
 }

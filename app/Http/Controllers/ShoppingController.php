@@ -3,32 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\Sell;
-use App\Models\Trending;
-use App\Services\ShoppingServices;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ShoppingController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request, ShoppingServices $requestShopping)
+    public function __invoke(Request $request)
     {
-        // Obtener los parámetros de la consulta de la URL
-        $gender = $request->query('gender');
-        $orderBy = $request->query('orderBy');
-        $page = $request->query('page', 1);
+        $products = Product::gender($request->input('gender'))
+            ->where('stock', '!=', 0)
+            ->orders($request->input('orderBy'))
+            ->trending($request->input('trendingProducts'))
+            ->sell($request->input('bestSellers'))
+            ->visited($request->input('mostVisited'))
+            ->paginate(20)
+            ->appends($request->all());
 
-        //Llamar al servicio que controla toda la consulta a la base de datos
-        $products = $requestShopping->search($request, $gender, $orderBy, $page);
-
+        $products->getCollection()->transform(function($products){
+            $images = [];
+            foreach(json_decode($products->images, true) as $item){
+                array_push($images, Storage::url('public/'.$item));
+            }
+            $products->images = $images;
+            return $products;
+        });
+        
         // Obtener totales de productos
-        $totalProducts = Product::count();
-        $totalNiño = Product::where('gender', 'niño')->count();
-        $totalHombre = Product::where('gender', 'hombre')->count();
-        $totalMujer = Product::where('gender', 'mujer')->count();
-        $totalUnisex = Product::where('gender', 'unisex')->count();
+        $totalProducts = Product::where('stock', '!=', 0)->count();
+        $totalNiño = Product::where('gender', 'niño')->where('stock', '!=', 0)->count();
+        $totalHombre = Product::where('gender', 'hombre')->where('stock', '!=', 0)->count();
+        $totalMujer = Product::where('gender', 'mujer')->where('stock', '!=', 0)->count();
+        $totalUnisex = Product::where('gender', 'unisex')->where('stock', '!=', 0)->count();
 
         return view("shopping", [
             "products" => $products,

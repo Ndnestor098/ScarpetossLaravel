@@ -7,7 +7,9 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProductAdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellController;
 use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
@@ -31,7 +33,7 @@ Route::post("/shopping", [ShoppingController::class, 'search'])->name("shopping.
 
 
 //=============================================Area de Producto==================================================
-Route::get("/products", ProductController::class)->name("product");
+Route::get("/products/{slug}", ProductController::class)->name("products.show");
 
 
 //==========================================Area de Login del usuario============================================
@@ -62,24 +64,21 @@ Route::controller(ClientController::class)->group(function(){
 //===============================================Area de Administrador=================================================
 Route::middleware(["auth", AdminMiddleware::class])->controller(AdminController::class)->group(function(){
     Route::get("/client/admin", "index")->name("admin");
+});
 
-    //==============Productos=============
-    Route::get("/client/admin/product", "showProduct")->name("admin.product");
+//===============================================Area de Administrador / Productos =================================================
+Route::middleware(["auth", AdminMiddleware::class])->controller(ProductAdminController::class)->group(function () {
+    Route::get("/client/admin/products", "index")->name("products");
+    Route::get("/client/admin/products/add", "create")->name("products.create");
+    Route::post("/client/admin/products", "store")->name('products.store');
+    Route::get("/client/admin/products/{id}/edit", "edit")->name("products.edit");
+    Route::put("/client/admin/products/{id}", "update")->name('products.update');
+    Route::delete("/client/admin/products/{id}", "destroy")->name('products.delete');
+});
 
-    //Crear Productos
-    Route::get("/client/admin/product/add", "showProductAdd")->name("admin.product.add");
-    Route::post("/client/admin/product/add", "createProduct");
-
-    //Editar Productos
-    Route::get("/client/admin/product/edit", "showProductUpdate")->name("admin.product.edit");
-    Route::post("/client/admin/product/edit", "updateProduct");
-
-    //Eliminar Productos
-    Route::delete("/client/admin/product", "deleteProduct");
-
-
-    //==============Ventas=============
-    Route::get("/client/admin/sell", "showSell")->name("admin.sell");
+//===============================================Area de Administrador / Ventas =================================================
+Route::middleware(["auth", AdminMiddleware::class])->controller(SellController::class)->group(function () {
+    Route::get("/client/admin/sell", "index")->name("sell");
 });
 
 //===============================================Area de Administrador / Usuarios =================================================
@@ -87,7 +86,7 @@ Route::middleware(["auth", AdminMiddleware::class])->controller(UserController::
     Route::get("/client/admin/users", "index")->name("users");
     Route::get("/client/admin/users/create", 'create')->name('users.create');
     Route::post("/client/admin/users", "store")->name("users.store");
-    Route::delete("/client/admin/users/{id}", "delete")->name('users.delete');
+    Route::delete("/client/admin/users/{id}", "destroy")->name('users.delete');
 });
 
 //===============================================Area de cart=================================================
