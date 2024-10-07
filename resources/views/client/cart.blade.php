@@ -11,42 +11,42 @@
             <div class="cantenido-productos-cart">
                 <div class="area-productos">
                     <!-- muestra todos los datos del carrito -->
-                    @if (isset($datos[0]))
-                        @foreach ($datos as $dato)
+                    @if (isset($data[0]))
+                        @foreach ($data as $item)
                             <div class="producto">
                                 <div class="img-producto">
-                                    <img src="{{ Storage::url($dato->product->imageP) }}" alt="zapatos">
+                                    <img src="{{ $item->product->images[0] }}" alt="zapatos">
                                 </div>
                                 <div class="info-producto">
-                                    <a href="{{route("product", ["shoes"=> $dato->product->name])}}">
+                                    <a href="{{route('products.show', ["slug"=> $item->product->slug])}}">
                                         <div class="title-producto">
-                                            <h5>{{$dato->product->brand}}</h5>
-                                            <p>{{$dato->product->name}}</p>
+                                            <h5>{{$item->product->brand}}</h5>
+                                            <p>{{$item->product->name}}</p>
                                         </div>
                                     </a>
                                     <div class="descripcion-producto">
-                                        <p>Cantidad: {{$dato->count_total}}</p>
-                                        <p>Talla: {{$dato->sizes}}</p>
+                                        <p>Cantidad: {{$item->count_total}}</p>
+                                        <p>Talla: {{$item->sizes}}</p>
                                     </div>
                                     <div class="opciones">
                                         <form action="{{route("cart.destroy")}}" method="POST">
                                             @csrf
                                             @method("delete")
-                                            <input type="hidden" name="product_id" value="{{$dato->product->id}}">
-                                            <input type="hidden" name="sizes" value="{{$dato->sizes}}">
+                                            <input type="hidden" name="product_id" value="{{$item->product->id}}">
+                                            <input type="hidden" name="sizes" value="{{$item->sizes}}">
                                             <button type="submit"><i class="fa-solid fa-trash" style="display:flex;gap:10px;">eliminar</i></button>
                                         </form>
                                         <form action="{{route("cart.destroy.oneAll")}}" method="POST">
                                             @csrf
                                             @method("delete")
-                                            <input type="hidden" name="product_id" value="{{$dato->product->id}}">
-                                            <input type="hidden" name="sizes" value="{{$dato->sizes}}">
+                                            <input type="hidden" name="product_id" value="{{$item->product->id}}">
+                                            <input type="hidden" name="sizes" value="{{$item->sizes}}">
                                             <button type="submit"><i class="fa-solid fa-trash" style="display:flex;gap:10px;">eliminar Todo</i></button>
                                         </form>
                                     </div>
                                 </div>
                                 <div class="precio-producto">
-                                    <p>${{$dato->product->price * $dato->count_total}}</p>
+                                    <p>${{$item->product->price * $item->count_total}}</p>
                                 </div>
                             </div>
                         @endforeach
@@ -68,9 +68,14 @@
             <div class="cantenido-pago-cart">
                 <div class="area-pago">
                     <!-- Caso contrario se muestra lo que esta guardado en la canasta del carrito -->
-                    @if(!empty($datos))
-                        @foreach ($datos as $dato)
-                            <?php $valor += $dato->product->price * $dato->count_total; ?>
+                    @if(!empty($data))
+                        @php
+                            $valor = 0;
+                        @endphp
+                        @foreach ($data as $item)
+                            @php
+                                $valor += $item->product->price * $item->count_total; 
+                            @endphp 
                         @endforeach
 
                         <div class="title-pago">
@@ -78,21 +83,23 @@
                         </div>
                         <div class="resumen-pago">
                             <div>
-                                <p>Valor de productos</p>
+                                <p style="font-size: 15px">Valor de productos</p>
                                 <p>Entrega</p>
                             </div>
                             <div style="text-align:end;">
-                                <p style="font-size: 17px;font-weight: 500;color: #435334;">${{$valor}}</p>
+                                <p style="font-size: 17px;font-weight: 500; color: #435334;">${{$valor}}</p>
                                 @if (auth()->user()->address)
                                     <p><span>{{auth()->user()->address}}</span></p>
                                 @else
-                                    <a href="{{route("client.details")}}"><span>Agregar Direccion</span></a>
+                                    <a href="{{route("client.details")}}">
+                                        <span style="font-size: 15px; font-weight: 500; color:#435334">Agregar Direccion</span>
+                                    </a>
                                 @endif
                             </div>
                         </div>
                             <div class="iva">
                                 <div>
-                                <p>A pagar (IVA incluido)</p>
+                                <p style="font-size: 15px">A pagar (IVA incluido)</p>
                             </div>
                             <div style="text-align:end;">
                                 <p style="font-size: 17px;font-weight: 500;color: #435334;">${{$valor}}</p>

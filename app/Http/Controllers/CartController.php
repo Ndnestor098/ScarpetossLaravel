@@ -7,23 +7,46 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 
 class CartController extends Controller
 {
     public function index()
     {
-        $datos = Cart::with('product') // Carga los productos relacionados con los carritos
+        $data = Cart::with('product') // Carga los productos relacionados con los carritos
             ->select('product_id', 'user_id', 'sizes', DB::raw('COUNT(*) as count_total')) // Selecciona los campos necesarios y cuenta las filas agrupadas
             ->groupBy('product_id', 'user_id', 'sizes') // Agrupa por product_id, user_id y sizes
             ->where('user_id', auth()->user()->id)
             ->get(); // Ejecuta la consulta y obtiene los resultados
+        
+        $data->transform(function ($data) {
+            $images = [];
 
-        $count = Cart::with('product')
-            ->select(DB::raw('COUNT(*) as count'))
-            ->where('user_id', auth()->user()->id)
-            ->first();
+            // Verifica si images es un string antes de decodificar
+            if (is_string($data->product->images)) {
+                // Convierte el JSON a un array
+                $imagesArray = json_decode($data->product->images, true);
 
-        return view("client.cart", ["datos" => $datos, 'valor'=>0, 'count' => $count->count]);
+                foreach ($imagesArray as $item) {
+                    // Asegúrate de que no tenga el prefijo 'public/' o 'storage/'
+                    $cleanedPath = preg_replace('/^\/?storage\/+/', '', $item); // Limpia duplicados
+                    $images[] = Storage::url($cleanedPath);
+                }
+            } else if (is_array($data->product->images)) {
+                foreach ($data->product->images as $item) {
+                    // Limpia duplicados
+                    $cleanedPath = preg_replace('/^\/?storage\/+/', '', $item); // Limpia duplicados
+                    $images[] = Storage::url($cleanedPath);
+                }
+            }
+
+            $data->product->images = $images; // Asigna el nuevo array de imágenes
+            return $data; 
+        });
+
+        $count = $data->count();
+
+        return view("client.cart", ["data" => $data, 'count' => $count]);
     }
 
 
