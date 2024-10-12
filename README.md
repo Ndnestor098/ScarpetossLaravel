@@ -70,6 +70,10 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 4. Compila los activos de front-end:
 
     ```bash
+    npm run build
+    ```
+
+    ```bash
     npm run dev
     ```
 
