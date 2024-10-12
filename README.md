@@ -1,39 +1,38 @@
 <p align="center"><a href="https://github.com/Ndnestor098/ScarpetossLaravel" target="_blank"><img src="https://ndnestor098.github.io/WebCV/assets/img/logoScarpe.png" width="400" alt="Scarpetoss Logo"></a></p>
 
-
 # Scarpetoss
 
 Scarpetoss es una tienda en línea construida con Laravel que permite a los usuarios navegar, buscar y comprar zapatos. Este proyecto utiliza Stripe para procesar los pagos y proporciona una interfaz de usuario limpia y moderna.
 
 ## Tabla de Contenidos
 
-- [Características](#características)
-- [Requisitos](#requisitos)
-- [Instalación](#instalación)
-- [Configuración](#configuración)
-- [Uso](#uso)
-- [Contribución](#contribución)
-- [Licencia](#licencia)
+-   [Características](#características)
+-   [Requisitos](#requisitos)
+-   [Instalación](#instalación)
+-   [Configuración](#configuración)
+-   [Uso](#uso)
+-   [Contribución](#contribución)
+-   [Licencia](#licencia)
 
 ## Características
 
-- Registro e inicio de sesión de usuarios.
-- Panel de administración para gestionar productos, ventas y usuarios.
-- Carrito de compras y procesamiento de pagos con Stripe.
-- Página de detalles del producto con imágenes y descripciones.
-- Filtrado y búsqueda de productos.
-- Sistema de trending y views de productos.
+-   Registro e inicio de sesión de usuarios.
+-   Panel de administración para gestionar productos, ventas y usuarios.
+-   Carrito de compras y procesamiento de pagos con Stripe.
+-   Página de detalles del producto con imágenes y descripciones.
+-   Filtrado y búsqueda de productos.
+-   Sistema de trending y views de productos.
 
 ## Requisitos
 
-- PHP >= 8.2.12
-- Composer
-- MySQL
-- Node.js & NPM
-- Tailwind
-- Lang Laravel
-- Laravel >= 11
-- Stripe API Key
+-   PHP >= 8.2.12
+-   Composer
+-   MySQL
+-   Node.js & NPM
+-   Tailwind
+-   Lang Laravel
+-   Laravel >= 11
+-   Stripe API Key
 
 ## Instalación
 
@@ -48,6 +47,14 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 
     ```bash
     composer install
+    ```
+
+    ```bash
+    composer require laravel/socialite
+    ```
+
+    ```bash
+    composer require laravel-lang/common
     ```
 
 3. Instala las dependencias de Node.js:
@@ -115,23 +122,23 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 
 ## Uso
 
-- Inicia el servidor de desarrollo usando XAMPP o:
+-   Inicia el servidor de desarrollo usando XAMPP o:
 
     ```bash
     php artisan serve
     ```
 
-- Accede a la aplicación en tu navegador:
+-   Accede a la aplicación en tu navegador:
 
     ```
     http://localhost:8000
     ```
 
-- Una vez iniciado te recomiendo registrarte y desde MySQL activar el is_admin a true.
+-   Una vez iniciado te recomiendo registrarte y desde MySQL activar el is_admin a true.
 
-- Siendo admin, entra en la pagina administrador y agrega productos, puedes controlarlo desde un CRUD.
+-   Siendo admin, entra en la pagina administrador y agrega productos, puedes controlarlo desde un CRUD.
 
-- Navega por la tienda, agrega productos al carrito y realiza pagos seguros con Stripe.
+-   Navega por la tienda, agrega productos al carrito y realiza pagos seguros con Stripe.
 
 ## Contribución
 

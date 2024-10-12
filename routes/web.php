@@ -14,10 +14,10 @@ use App\Http\Controllers\ShoppingController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Pest\Console\Thanks;
 
 //============================================Paginas Principales================================================
 Route::get('/', HomeController::class)->name('home');
@@ -38,13 +38,22 @@ Route::get("/products/{slug}", ProductController::class)->name("products.show");
 
 //==========================================Area de Login del usuario============================================
 Route::controller(LoginController::class)->group(function(){
-    Route::get("/login", "index")->name("login");
+    Route::get("/login", "index")->name("login")->middleware('guest');
+
+    Route::get('auth/google', "google")->name("google")->middleware('guest');
+    Route::get('auth/google/callback', "googleCallback")->name("google.callback")->middleware('guest');
+
+    Route::get('auth/twitter', "twitter")->name("twitter")->middleware('guest');
+    Route::get('auth/twitter/callback', "twitterCallback")->name("twitter.callback")->middleware('guest');
+
+    Route::get('auth/github', "github")->name("github")->middleware('guest');
+    Route::get('auth/github/callback', "githubCallback")->name("github.callback")->middleware('guest');
 
     Route::post("/login", "login")->name("login.post");
 
     Route::get("/logout", "logout")->name("logout");
 
-    Route::get("/register", "create")->name("register");
+    Route::get("/register", "create")->name("register")->middleware('guest');
 
     Route::post("/register", "register")->name("register.post");
 });

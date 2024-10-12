@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\Log;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -18,6 +19,106 @@ class LoginController extends Controller
     public function index()
     {
         return view("login.login");
+    }
+
+
+    public function google()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallback()
+    {
+        $user = Socialite::driver('google')->user();
+
+        $authUser = User::where('google_id', $user->id)->first();
+
+        if ($authUser) {
+            Auth::login($authUser);
+        } else {
+            $existUser = User::where('email', $user->email)->first();
+
+            if($existUser){
+                return redirect()->back()->withErrors(['login_error' => 'El campo correo electrónico ya ha sido registrado.'])->withInput();
+            }
+
+            $authUser = User::create([
+                'google_id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+            ]);
+
+            Auth::login($authUser);
+            
+        }
+        
+        return redirect()->route('home');
+    }
+
+    public function twitter()
+    {
+        return Socialite::driver('twitter')->redirect();
+    }
+
+    public function twitterCallback()
+    {
+        $user = Socialite::driver('twitter')->user();
+        
+        $authUser = User::where('twitter_id', $user->id)->first();
+
+        if ($authUser) {
+            Auth::login($authUser);
+        } else {
+            // Verifica si ya hay un usuario con el mismo correo electrónico
+            $existUser = User::where('email', $user->email)->first();
+
+            if ($existUser) {
+                return redirect()->back()->withErrors(['login_error' => 'El campo correo electrónico ya ha sido registrado.'])->withInput();
+            }
+
+            $authUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'twitter_id' => $user->id,
+            ]);
+
+            Auth::login($authUser);
+        }
+
+        return redirect()->route('home');
+    }
+
+    public function github()
+    {
+        return Socialite::driver('github')->redirect();
+    }
+
+    public function githubCallback()
+    {
+        $user = Socialite::driver('github')->user();
+        
+        $authUser = User::where('github_id', $user->id)->first();
+
+        if ($authUser) {
+            Auth::login($authUser);
+        } else {
+            // Verifica si ya hay un usuario con el mismo correo electrónico
+            $existUser = User::where('email', $user->email)->first();
+
+            if ($existUser) {
+                return redirect()->back()->withErrors(['login_error' => 'El campo correo electrónico ya ha sido registrado.'])->withInput();
+            }
+
+            $authUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'github_id' => $user->id,
+            ]);
+
+            Auth::login($authUser);
+        }
+
+        return redirect()->route('home');
     }
 
     /**

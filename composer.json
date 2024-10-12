@@ -8,6 +8,7 @@
         "php": "^8.2",
         "laravel-lang/common": "^6.3",
         "laravel/framework": "^11.0",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.9",
         "stripe/stripe-php": "^14.7"
     },
