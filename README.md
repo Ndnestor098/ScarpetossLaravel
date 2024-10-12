@@ -98,21 +98,6 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
     DB_DATABASE=nombre_de_tu_base_de_datos
     DB_USERNAME=tu_usuario
     DB_PASSWORD=tu_contraseña
-
-    STRIPE_KEY=tu_key_Stripe
-    STRIPE_SECRET=tu_secret_Stripe
-
-    GOOGLE_CLIENT_ID=tu_id_google
-    GOOGLE_CLIENT_SECRET=tu_secret_google
-    GOOGLE_REDIRECT_URL=${APP_NAME}/auth/google/callback
-
-    TWITTER_CLIENT_ID=tu_id_twitter
-    TWITTER_CLIENT_SECRET=tu_secret_twitter
-    TWITTER_REDIRECT_URL=${APP_NAME}/auth/twitter/callback
-
-    GITHUB_CLIENT_ID=tu_id_github
-    GITHUB_CLIENT_SECRET=tu_secret_github
-    GITHUB_REDIRECT_URL=${APP_NAME}/auth/github/callback
     ```
 
 8. Ejecuta las migraciones y los seeders:
@@ -130,17 +115,20 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
     STRIPE_SECRET=tu_stripe_secret
     ```
 
-2. Configura el servidor de correo electrónico para el envío de notificaciones y restablecimiento de contraseñas en el archivo `.env`:
+2. Configura el SSO con Google, GitHub y Twitter en el archivo `.env`:
 
     ```
-    MAIL_MAILER=smtp
-    MAIL_HOST=smtp.mailtrap.io
-    MAIL_PORT=2525
-    MAIL_USERNAME=tu_usuario
-    MAIL_PASSWORD=tu_contraseña
-    MAIL_ENCRYPTION=tls
-    MAIL_FROM_ADDRESS=from@example.com
-    MAIL_FROM_NAME="${APP_NAME}"
+    GOOGLE_CLIENT_ID=tu_id_google
+    GOOGLE_CLIENT_SECRET=tu_secret_google
+    GOOGLE_REDIRECT_URL=${APP_NAME}/auth/google/callback
+
+    TWITTER_CLIENT_ID=tu_id_twitter
+    TWITTER_CLIENT_SECRET=tu_secret_twitter
+    TWITTER_REDIRECT_URL=${APP_NAME}/auth/twitter/callback
+
+    GITHUB_CLIENT_ID=tu_id_github
+    GITHUB_CLIENT_SECRET=tu_secret_github
+    GITHUB_REDIRECT_URL=${APP_NAME}/auth/github/callback
     ```
 
 ## Uso
