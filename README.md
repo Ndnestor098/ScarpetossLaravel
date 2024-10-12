@@ -33,6 +33,7 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
 -   Lang Laravel
 -   Laravel >= 11
 -   Stripe API Key
+-   Socialite
 
 ## Instalación
 
