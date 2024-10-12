@@ -57,6 +57,10 @@ Scarpetoss es una tienda en línea construida con Laravel que permite a los usua
     composer require laravel-lang/common
     ```
 
+    ```bash
+    composer require stripe/stripe-php
+    ```
+
 3. Instala las dependencias de Node.js:
 
     ```bash
